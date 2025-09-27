@@ -1,0 +1,132 @@
+
+# ===================== ENTIDADES =====================
+
+type Cliente {
+    cedula: ID!
+    nombre: String!
+    apellido: String!
+    direccion: String!
+    telefono: String!
+}
+
+type Alimentacion {
+    tipo: ID!
+    descripcion: String!
+    dosis: Float!
+}
+
+type Administrador {
+    id: ID!
+    usuario: String!
+    contrasena: String!
+}
+
+type Raza {
+    id: ID!
+    raza: String!
+
+}
+
+type Porcino {
+    identificacion: ID!
+    edad: Int!
+    peso: Float!
+    raza: Raza!
+    alimentacion: Alimentacion!
+    cliente: Cliente!
+}
+
+type ReportePorcino {
+  clienteCedula: String
+  clienteNombre: String
+  clienteApellido: String
+  clienteTelefono: String
+  clienteDireccion: String
+  porcinoIdentificacion: String
+  porcinoEdad: Int
+  porcinoPeso: Float
+  razaNombre: String
+  alimentacionDescripcion: String
+  alimentacionDosis: Float
+}
+
+# ===================== QUERIES =====================
+
+type Query {
+    obtenerClientes: [Cliente]
+    obtenerClientePorCedula(cedula: ID!): Cliente
+
+    obtenerAlimentacion: [Alimentacion]
+    obtenerAlimentacionPorTipo(tipo: ID!): Alimentacion
+
+    obtenerRaza: [Raza]
+    obtenerRazaPorId( id: ID!): Raza
+
+    obtenerPorcino: [Porcino]
+    obtenerPorcinoPorId( identificacion: ID!): Porcino
+
+    obtenerAdministradorPorUsuario(usuario: String!): Administrador
+
+    reportePorcinosPorCliente(cedula: ID!): [ReportePorcino]
+    reportePorcino: [ReportePorcino]
+
+
+}
+
+
+# ===================== INPUTS =====================
+
+input ClienteInput {
+    cedula: ID!
+    nombre: String!
+    apellido: String!
+    direccion: String!
+    telefono: String!
+}
+
+input AdministradorInput {
+    usuario: String!
+    contrasena: String!
+}
+
+input AlimentacionInput {
+    tipo: ID!
+    descripcion: String!
+    dosis: Float!
+}
+
+input RazaInput {
+    id: ID!
+    raza: String!
+}
+
+input PorcinoInput {
+    identificacion: ID!
+    edad: Int!
+    peso: Float!
+    razaId: Int!
+    alimentacionTipo: Int!
+    clienteCedula: ID!
+}
+
+
+type Mutation {
+
+
+    guardarCliente(input: ClienteInput): Cliente
+    eliminarCliente(cedula: ID!): Cliente
+    actualizarCliente(cedula: ID!, input: ClienteInput): Cliente
+
+    guardarAlimentacion(input: AlimentacionInput): Alimentacion
+    eliminarAlimentacion(tipo: ID!): Alimentacion
+    actualizarAlimentacion(tipo: ID!, input: AlimentacionInput): Alimentacion
+
+    guardarPorcino(input: PorcinoInput): Porcino
+    eliminarPorcino(identificacion: ID!): Porcino
+    actualizarPorcino( identificacion: ID!, input: PorcinoInput): Porcino
+
+    guardarAdministrador(input: AdministradorInput): Administrador
+    eliminarAdministrador(usuario: String!): Administrador
+    actualizarAdministrador( usuario: String!, input: AdministradorInput): Administrador
+
+}
