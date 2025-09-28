@@ -38,4 +38,27 @@ public class RazaService {
 
     public Raza ObtenerPorId(Integer id) {return  razaRepository.findById(id).orElse(null);}
 
+    public Raza guardarRaza(Raza raza) {
+        if (razaRepository.existsById(raza.getId()) || razaRepository.existsByraza(raza.getRaza())) {
+            throw new IllegalArgumentException("La raza ya existe");
+        }
+        return razaRepository.save(raza);
+    }
+
+    public Raza actualizarRaza(Integer id, Raza input) {
+        Raza raza = razaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Raza con id: " + id + " no encontrada"));
+        
+        raza.setRaza(input.getRaza());
+        return razaRepository.save(raza);
+    }
+
+    public Raza eliminarRaza(Integer id) {
+        Raza raza = razaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Raza con id: " + id + " no encontrada"));
+        
+        razaRepository.delete(raza);
+        return raza;
+    }
+
 }

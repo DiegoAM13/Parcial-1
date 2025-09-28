@@ -30,6 +30,9 @@ public class PorcinoService {
 
     @Autowired
     private RazaRepository razaRepository;
+    
+    @Autowired
+    private SubscriptionService subscriptionService;
 
 
     public  List<Porcino> obtenerPorcino()
@@ -59,7 +62,15 @@ public class PorcinoService {
 
         Porcino porcinonuevo = new Porcino(porcino.getIdentificacion(),porcino.getEdad(),porcino.getPeso(),raza,alimentacion,cliente);
 
-        porcinoRepository.save(porcinonuevo);
+        Porcino savedPorcino = porcinoRepository.save(porcinonuevo);
+        
+        // Emitir evento de porcino agregado
+        subscriptionService.emitirPorcinoAgregado(savedPorcino);
+        
+        // Si el peso supera cierto límite, emitir alerta
+        if (savedPorcino.getPeso() > 250) {
+            subscriptionService.emitirAlertaPeso(savedPorcino);
+        }
     }
 
     public Porcino EliminarPorcino(String Identificacion)

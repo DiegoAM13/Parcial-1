@@ -6,6 +6,7 @@ import Graphql.CRUD.Repositories.AdministradorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,12 +14,27 @@ public class AdministradorService {
 
     @Autowired
     private AdministradorRepository administradorRepository;
-
-
+    
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public Administrador obtenerAdministradorPorUsuario( String usuario)
     {
         return administradorRepository.findByUsuario(usuario).orElse(null);
+    }
+    
+    public Administrador login(String usuario, String contrasena) {
+        Administrador admin = administradorRepository.findByUsuario(usuario).orElse(null);
+        if (admin != null) {
+            // Check if password matches using BCrypt
+            if (passwordEncoder.matches(contrasena, admin.getContrasena())) {
+                return admin;
+            }
+            // Also check plain text for development (remove in production)
+            if (admin.getContrasena().equals(contrasena)) {
+                return admin;
+            }
+        }
+        return null;
     }
     public  Administrador CrearAdmin(LoginDTO loginDTO)
     {

@@ -66,14 +66,13 @@ type Query {
     obtenerPorcinoPorId( identificacion: ID!): Porcino
 
     obtenerAdministradorPorUsuario(usuario: String!): Administrador
+    login(usuario: String!, contrasena: String!): Administrador
 
     reportePorcinosPorCliente(cedula: ID!): [ReportePorcino]
     reportePorcino: [ReportePorcino]
 
 
 }
-
-
 # ===================== INPUTS =====================
 
 input ClienteInput {
@@ -125,8 +124,31 @@ type Mutation {
     eliminarPorcino(identificacion: ID!): Porcino
     actualizarPorcino( identificacion: ID!, input: PorcinoInput): Porcino
 
+    guardarRaza(input: RazaInput): Raza
+    eliminarRaza(id: ID!): Raza
+    actualizarRaza(id: ID!, input: RazaInput): Raza
+
     guardarAdministrador(input: AdministradorInput): Administrador
     eliminarAdministrador(usuario: String!): Administrador
     actualizarAdministrador( usuario: String!, input: AdministradorInput): Administrador
 
+}
+
+# ===================== SUBSCRIPTIONS =====================
+
+type Subscription {
+    # Suscripción para nuevos porcinos agregados
+    porcinoAgregado: Porcino
+    
+    # Suscripción para actualizaciones de porcinos
+    porcinoActualizado: Porcino
+    
+    # Suscripción para clientes nuevos
+    clienteAgregado: Cliente
+    
+    # Suscripción para nuevas razas
+    razaAgregada: Raza
+    
+    # Notificación cuando el peso de un porcino supera un límite
+    alertaPesoPorcino(pesoLimite: Float!): Porcino
 }

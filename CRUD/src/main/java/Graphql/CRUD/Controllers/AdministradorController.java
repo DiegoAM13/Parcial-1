@@ -20,6 +20,11 @@ public class AdministradorController {
     {
         return administradorService.obtenerAdministradorPorUsuario(usuario);
     }
+    
+    @QueryMapping
+    public Administrador login(@Argument String usuario, @Argument String contrasena) {
+        return administradorService.login(usuario, contrasena);
+    }
 
 
     @MutationMapping
