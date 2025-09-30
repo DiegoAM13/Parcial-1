@@ -1,7 +1,6 @@
 package Graphql.CRUD.Services;
 
 import Graphql.CRUD.Entities.Alimentacion;
-import Graphql.CRUD.Entities.Cliente;
 import Graphql.CRUD.Repositories.AlimentacionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

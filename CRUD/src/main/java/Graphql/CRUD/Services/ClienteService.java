@@ -7,20 +7,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class ClienteService {
 
     @Autowired
     private ClienteRepository clienteRepository;
+    
+    @Autowired
+    private SubscriptionService subscriptionService;
 
     public void GuardarCliente(Cliente cliente){
         if (clienteRepository.existsById(cliente.getCedula()))
         {
             throw  new IllegalArgumentException("El cliente ya existe");
         }
-        clienteRepository.save(cliente);
+        Cliente savedCliente = clienteRepository.save(cliente);
+        
+        // Emitir evento de cliente agregado
+        subscriptionService.emitirClienteAgregado(savedCliente);
 
 
     }public Cliente EliminarCliente(String Cedula)

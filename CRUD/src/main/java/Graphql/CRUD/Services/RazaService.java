@@ -13,13 +13,19 @@ public class RazaService {
 
     @Autowired
     private RazaRepository razaRepository;
+    
+    @Autowired
+    private SubscriptionService subscriptionService;
     public void CrearRaza(Raza raza) {
 
         if (razaRepository.existsById(raza.getId()) || razaRepository.existsByraza(raza.getRaza()))
         {
             throw  new IllegalArgumentException(" Ya existe");
         }
-        razaRepository.save(raza);
+        Raza savedRaza = razaRepository.save(raza);
+        
+        // Emitir evento de raza agregada
+        subscriptionService.emitirRazaAgregada(savedRaza);
 
     }
 
@@ -42,7 +48,12 @@ public class RazaService {
         if (razaRepository.existsById(raza.getId()) || razaRepository.existsByraza(raza.getRaza())) {
             throw new IllegalArgumentException("La raza ya existe");
         }
-        return razaRepository.save(raza);
+        Raza savedRaza = razaRepository.save(raza);
+        
+        // Emitir evento de raza agregada
+        subscriptionService.emitirRazaAgregada(savedRaza);
+        
+        return savedRaza;
     }
 
     public Raza actualizarRaza(Integer id, Raza input) {

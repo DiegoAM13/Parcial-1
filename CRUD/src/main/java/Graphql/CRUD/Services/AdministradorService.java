@@ -5,7 +5,6 @@ import Graphql.CRUD.Entities.*;
 import Graphql.CRUD.Repositories.AdministradorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 

@@ -16,6 +16,7 @@
     "@types/react-dom": "^18.2.14",
     "date-fns": "^2.30.0",
     "graphql": "^16.8.1",
+    "graphql-ws": "^6.0.6",
     "lucide-react": "^0.544.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

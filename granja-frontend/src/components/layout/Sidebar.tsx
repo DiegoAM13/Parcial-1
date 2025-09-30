@@ -19,6 +19,7 @@ const navigation = [
   { name: 'Razas', href: '/razas', icon: '🧬' },
   { name: 'Reportes', href: '/reportes', icon: DocumentChartBarIcon },
   { name: 'Importar CSV', href: '/importar', icon: CloudArrowUpIcon },
+  { name: 'Alertas', href: '/alertas', icon: '🔔' },
 ];
 
 export const Sidebar: React.FC = () => {

@@ -11,7 +11,6 @@ import Graphql.CRUD.Repositories.PorcinoRepository;
 import Graphql.CRUD.Repositories.RazaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -109,6 +108,15 @@ public class PorcinoService {
         }
 
         Porcino guardado = porcinoRepository.save(porcinoActualizar);
+        
+        // Emitir evento de porcino actualizado
+        subscriptionService.emitirPorcinoActualizado(guardado);
+        
+        // Si el peso supera cierto límite, emitir alerta
+        if (guardado.getPeso() > 250) {
+            subscriptionService.emitirAlertaPeso(guardado);
+        }
+        
         return guardado;
 
     }

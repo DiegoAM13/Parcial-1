@@ -10,6 +10,7 @@ import { AlimentacionPage } from './pages/Alimentacion';
 import { Razas } from './pages/Razas';
 import { Reportes } from './pages/Reportes';
 import ImportarDatos from './pages/ImportarDatos';
+import Alertas from './pages/Alertas';
 
 function App() {
   const { isAuthenticated } = useAuth();
@@ -28,6 +29,7 @@ function App() {
         <Route path="razas" element={<Razas />} />
         <Route path="reportes" element={<Reportes />} />
         <Route path="importar" element={<ImportarDatos />} />
+        <Route path="alertas" element={<Alertas />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
